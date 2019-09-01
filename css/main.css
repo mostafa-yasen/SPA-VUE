@@ -7,3 +7,17 @@
     z-index: 999;
     transition: all 1s ease-in-out;
 }
+
+.text-upper {
+    text-transform: uppercase;
+}
+
+.bg-gradiant {
+    background: rgb(142,107,255);
+
+    background: linear-gradient(60deg, rgba(142,107,255,1) 0%, rgba(252,70,165,1) 100%);
+}
+
+.new-item-demo {
+    opacity: .3;
+}
