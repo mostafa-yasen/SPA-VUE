@@ -1,6 +1,22 @@
 $(function () {
     $(".loader").css('width', '0');
 
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<div class="mb-2">\
+        <button class="text-danger btn">\
+            <i class="fas fa-times"></i>\
+        </button>\
+        <button class="btn-success btn" v-if="todo.done">\
+            <i class="fas fa-check"></i>\
+        </button>\
+        <button class="btn-light btn text-success" v-else>\
+            <i class="fas fa-check"></i>\
+        </button>\
+        {{ todo.text }}\
+    </div>'
+    });
+
     var app = new Vue({
         el: "#app",
         data: {
