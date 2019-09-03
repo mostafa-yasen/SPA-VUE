@@ -56,6 +56,11 @@ $(function () {
                 $("#new_item_value").val("");
                 this.new_item_demo = "";
             }
+        },
+        computed: {
+            time: function () {
+                return new Date().toLocaleTimeString();
+            }   
         }
     })
 });
