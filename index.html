@@ -29,8 +29,8 @@
 
     <!-- Start Page -->
     <div id="app">
-        <h1 class="display-4 text-center mt-5 text-upper" :title="date">{{ welcome_message }}</h1>
-        <div class="text-center">
+        <h1 class="text-upper text-center mt-5" :class="classObj" :title="date">{{ title }}</h1>
+        <div class="text-center text-muted">
             {{ time }}
         </div>
         <div class="container pt-5">
@@ -39,9 +39,19 @@
                     <h4 class="text-light bg-gradiant rounded py-3 text-center">
                         <i class="fas fa-clipboard-list"></i>
                         Todo List
+                        <!-- <span class="badge badge-light text-xs">vue.js</span> -->
                     </h4>
                    
-                    <todo-item v-for="item in todos" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+                    <div v-if="todos.length > 0">
+                        <todo-item v-for="(item, index) in todos" v-bind:todo="item" v-bind:key="item.id" v-on:remove="todos.splice(index, 1)" v-on:complete="item.done = true" v-on:uncomplete="item.done = false"></todo-item>
+                    </div>
+                    <div v-else class="text-center">
+                        <img src="images/all_done.png" alt="it's all is ok.">
+                        <p class="text-center" style="color: #8e6bff">
+                            It's all ok.. go take a coffee break.
+                        </p>
+                    </div>
+                    
 
                     <!-- Start New Item Demo -->
                     <div class="new-item-demo" v-if="new_item_demo != ''">
@@ -58,23 +68,25 @@
                     <hr>
                     <!-- Start Add New Item -->
                     <div class="add-new">
-                        <div class="input-group">
-                            <input v-model="new_item_demo" type="text" class="form-control" id="new_item_value" placeholder="Add new item">
-                            <div class="input-group-append" id="button-addon4">
-                                <button v-on:click="clear_input" class="btn btn-outline-dark" type="button">
-                                    <i class="fas fa-angle-left"></i>
-                                </button>
-                                <button v-on:click="add_item" class="btn btn-outline-success" type="button">
-                                    <i class="fas fa-plus"></i>
-                                </button>
+                        <form @submit.prevent="add_item">
+                            <div class="input-group">
+                                <input v-model="new_item_demo" type="text" class="form-control" id="new_item_value" placeholder="Add new item">
+                                <div class="input-group-append" id="button-addon4">
+                                    <button v-on:click="clear_input" class="btn btn-outline-dark" type="button">
+                                        <i class="fas fa-angle-left"></i>
+                                    </button>
+                                    <button v-on:click="add_item" class="btn btn-outline-success" type="button">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <!-- End Add New Item -->
                     <div class="todo-links mt-2">
-                        <span class="text-info d-block text-sm text-center">Mark all as done.</span>
-                        <span class="text-info d-block text-sm text-center">Mark all as not done.</span>
-                        <span class="text-info d-block text-sm text-center">Clear All</span>
+                        <a class="link text-info d-block text-sm text-center" @click="complete_all()">Mark all as completed</a>
+                        <a class="link text-info d-block text-sm text-center" @click="uncomplete_all()">Mark all as not uncompleted</a>
+                        <a class="link text-info d-block text-sm text-center" @click="delete_completed">Delete completed</a>
                     </div>
                 </div>
             </div>

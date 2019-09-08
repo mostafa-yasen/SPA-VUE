@@ -13,8 +13,12 @@
     font-size: .9em
 }
 
+.text-xs {
+    font-size: .6em
+}
+
 .link {
-    color: var(--color-primary)
+    cursor: pointer;
 }
 
 .text-upper {
