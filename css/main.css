@@ -17,6 +17,10 @@
     font-size: .6em
 }
 
+.text-decoration-line-through {
+    text-decoration: line-through
+}
+
 .link {
     cursor: pointer;
 }

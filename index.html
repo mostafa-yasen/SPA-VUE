@@ -34,7 +34,7 @@
             {{ time }}
         </div>
         <div class="container pt-5">
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-12 col-lg-4">
                     <h4 class="text-light bg-gradiant rounded py-3 text-center">
                         <i class="fas fa-clipboard-list"></i>
@@ -48,7 +48,7 @@
                     <div v-else class="text-center">
                         <img src="images/all_done.png" alt="it's all is ok.">
                         <p class="text-center" style="color: #8e6bff">
-                            It's all ok.. go take a coffee break.
+                            It's all done.. go take a coffee break.
                         </p>
                     </div>
                     
@@ -68,14 +68,14 @@
                     <hr>
                     <!-- Start Add New Item -->
                     <div class="add-new">
-                        <form @submit.prevent="add_item">
+                        <form @submit.prevent="add_item()">
                             <div class="input-group">
-                                <input v-model="new_item_demo" type="text" class="form-control" id="new_item_value" placeholder="Add new item">
+                                <input autocomplete="off" v-model.trim="new_item_demo" type="text" class="form-control" id="new_item_value" placeholder="Add new item" @keyup.esc="clear_input" @keyup.ctrl.13.exact="add_item(true)">
                                 <div class="input-group-append" id="button-addon4">
                                     <button v-on:click="clear_input" class="btn btn-outline-dark" type="button">
                                         <i class="fas fa-angle-left"></i>
                                     </button>
-                                    <button v-on:click="add_item" class="btn btn-outline-success" type="button">
+                                    <button v-on:click="add_item()" class="btn btn-outline-success" type="button">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
@@ -89,15 +89,20 @@
                         <a class="link text-info d-block text-sm text-center" @click="delete_completed">Delete completed</a>
                     </div>
                 </div>
+                <div class="col-md-12 col-lg-8">
+                    <!-- POSTS HERE -->
+                    <post-card v-for="(post, index) in posts" v-bind:post="post" v-bind:key="post.id"></post-card>
+                </div>
             </div>
         </div>
     </div>
     <!-- End Page -->
 
-    <!-- JQuery 3.3.1 slim minified -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
+    <!-- JQuery 3.4.1 minified -->
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
 
     <!-- Popper.js 1.14.7 minified -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

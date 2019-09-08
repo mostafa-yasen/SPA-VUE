@@ -1,6 +1,23 @@
 $(function () {
     $(".loader").css('width', '0');
 
+    var POSTS = []
+
+    $.ajax({
+        url: 'https://jsonplaceholder.typicode.com/posts',
+        method: 'GET',
+        success: function (response) {
+            app.posts = response;
+            console.log(POSTS)
+        },
+        error: function (err) {
+            console.log(err);
+        },
+        complete: function () {
+            console.log("Completed")
+        }
+    })
+
     Vue.component('todo-item', {
         props: ['todo'],
         template: '\
@@ -14,9 +31,21 @@ $(function () {
                 <button class="btn-light btn text-success" v-on:click="$emit(\'complete\')" v-else>\
                     <i class="fas fa-check"></i>\
                 </button>\
-                {{ todo.text }}\
+                <span v-bind:class="{\'text-decoration-line-through\': todo.done}">{{ todo.text }}</span>\
             </div>'
     });
+
+    Vue.component('post-card', {
+        props: ['post'],
+        template: '<div v-bind:key="post.id" class="card shadow mb-3">\
+        <div class="card-header">\
+            {{ post.title }}\
+        </div>\
+        <div class="card-body">\
+            {{ post.body }}\
+        </div>\
+    </div>'
+    })
 
     var app = new Vue({
         el: "#app",
@@ -30,6 +59,7 @@ $(function () {
             new_item_demo: "",
             date: "you loaded this page at " + new Date().toLocaleTimeString(),
             seen: true,
+            posts: POSTS,
             todos: [{
                     id: 0,
                     text: "Learn ERP Next.",
@@ -48,11 +78,11 @@ $(function () {
             ]
         },
         methods: {
-            add_item: function () {
+            add_item: function (completed=false) {
                 if ($("#new_item_value").val()) {
                     new_item = {
                         text: $("#new_item_value").val(),
-                        done: false
+                        done: completed
                     }
                     this.todos.push(new_item);
                 }
@@ -103,5 +133,6 @@ $(function () {
                 console.log("Watched.");
             },
           }
-    })
+    });
+
 });
